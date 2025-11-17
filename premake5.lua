@@ -1,31 +1,33 @@
-project "Box2D_cpp"
+project "Box2D"
     kind "StaticLib"
-    language "C++"
-    cppdialect "C++17"
+    language "C"
+	cdialect "C17"
     staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-
-	files
-	{
-        "include/box2dcpp/**.h",
-        "include/box2dcpp/**.cpp",
-        "include/box2d/box2d.h" 
+    
+    files
+    {
+        "src/**.c",
+        "src/**.h",
+        "include/**.h"
     }
-
+    
     includedirs
-	{
-		"include"
+    {
+        "include",
+        "src"
     }
-	
-	filter "system:windows"
-		systemversion "latest"
+    
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "on"
 
-	filter "configurations:Debug"
-		runtime "Debug"
-		symbols "on"
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "on"
 
-	filter "configurations:Release"
+	filter "configurations:Dist"
 		runtime "Release"
 		optimize "on"
